@@ -1,0 +1,46 @@
+{% macro visibility(type = 'PRIVATE') %}
+    {%- if type == 'PRIVATE' %}
+        {{- 'private' -}}
+    {% elseif type == 'PROTECTED' %}
+        {{- 'protected' -}}
+    {% elseif type == 'PUBLIC' %}
+        {{- 'public' -}}
+    {% else %}
+        {{- 'private' -}}
+    {% endif -%}
+{% endmacro %}
+
+{% macro type(type = 'OBJECT') %}
+    {%- if type == 'STRING' %}
+        {{- 'string' -}}
+    {% elseif type == 'INTEGER' %}
+        {{- 'int' -}}
+    {% elseif type == 'TIMESTAMP' %}
+        {{- '\DateTime' -}}
+    {% elseif type == 'VOID' %}
+        {{- 'void' -}}
+    {% else %}
+        {{- 'object' -}}
+    {% endif -%}
+{% endmacro %}
+
+{% macro default_value(type) %}
+    {%- if type == 'STRING' %}
+        {{- '\'\'' -}}
+    {% elseif type == 'INTEGER' %}
+        {{- '0' -}}
+    {% else %}
+        {{- 'null' -}}
+    {% endif -%}
+{% endmacro %}
+
+{% macro args(args = []) %}
+    {%- for arg in args %}
+        {{- _self.type(arg.type) }} ${{ arg.name -}}
+        {%- if loop.last == false %}, {% endif -%}
+    {% endfor -%}
+{% endmacro %}
+
+{% macro method(visibility = 'PRIVATE', returnType = 'VOID', name = 'METHODNAME', args = []) %}
+    {{- _self.visibility(visibility) }} function {{ name }}({{ _self.args(args)}}): {{ _self.type(returnType) -}}
+{% endmacro %}

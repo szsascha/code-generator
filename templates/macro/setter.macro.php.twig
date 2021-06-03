@@ -1,0 +1,9 @@
+{% import "macro/lang.php.twig" as lang %}
+{{ _self.exec(method) }} 
+{% macro exec(method) -%}
+{% set setMethodName = 'set' ~ method.name|capitalize %}
+{% set setMethodArg = [ { 'type': method.returnType, 'name': method.name } ] %}
+    {{ lang.method(method.visibility, 'VOID', setMethodName, setMethodArg) }} {
+        $this->{{ method.name }} = ${{ method.name }};
+    }
+{%- endmacro -%}

@@ -1,0 +1,20 @@
+{% import "macro/lang.php.twig" as lang %}
+<?php
+class {{ class.name|capitalize }} {
+{% for attribute in attributes %}
+
+    {{ lang.visibility(attribute.visibility) }} {{ lang.type(attribute.type) }} ${{ attribute.name }} = {{ lang.default_value(attribute.type) }};
+{% endfor %}
+
+{% for method in methods %}
+    {%- if method.macro is defined %}
+    {% include "macro/" ~ method.macro|lower ~ ".macro.php.twig" with { method: method } %}
+    {% else %}
+    {{ lang.method(method.visibility, method.returnType, method.name, method.arguments) }} {
+        // TODO empty method
+        return {{ lang.default_value(method.returnType) }};
+    }
+    {% endif %}
+{% endfor %}
+
+}

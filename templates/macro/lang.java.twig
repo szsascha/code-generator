@@ -1,0 +1,46 @@
+{% macro visibility(type = 'PRIVATE') %}
+    {%- if type == 'PRIVATE' %}
+        {{- 'private' -}}
+    {% elseif type == 'PROTECTED' %}
+        {{- 'protected' -}}
+    {% elseif type == 'PUBLIC' %}
+        {{- 'public' -}}
+    {% else %}
+        {{- '' -}}
+    {% endif -%}
+{% endmacro %}
+
+{% macro type(type = 'OBJECT') %}
+    {%- if type == 'STRING' %}
+        {{- 'String' -}}
+    {% elseif type == 'INTEGER' %}
+        {{- 'int' -}}
+    {% elseif type == 'TIMESTAMP' %}
+        {{- 'java.sql.Timestamp' -}}
+    {% elseif type == 'VOID' %}
+        {{- 'void' -}}
+    {% else %}
+        {{- 'Object' -}}
+    {% endif -%}
+{% endmacro %}
+
+{% macro default_value(type) %}
+    {%- if type == 'STRING' %}
+        {{- '""' -}}
+    {% elseif type == 'INTEGER' %}
+        {{- '0' -}}
+    {% else %}
+        {{- 'null' -}}
+    {% endif -%}
+{% endmacro %}
+
+{% macro args(args = []) %}
+    {%- for arg in args %}
+        {{- _self.type(arg.type) }} {{ arg.name -}}
+        {%- if loop.last == false %}, {% endif -%}
+    {% endfor -%}
+{% endmacro %}
+
+{% macro method(visibility = 'PRIVATE', returnType = 'VOID', name = 'METHODNAME', args = []) %}
+    {{- _self.visibility(visibility) }} {{ _self.type(returnType) }} {{ name }}({{ _self.args(args)}}) 
+{%- endmacro %}

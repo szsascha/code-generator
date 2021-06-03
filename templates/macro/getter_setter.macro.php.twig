@@ -1,0 +1,8 @@
+{% import "macro/lang.php.twig" as lang %}
+
+{{ _self.exec(method) }}
+{%- macro exec(method) %}
+{% include "macro/setter.macro.php.twig" with { method: method } %}
+
+{% include "macro/getter.macro.php.twig" with { method: method } %}
+{% endmacro -%}

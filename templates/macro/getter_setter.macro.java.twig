@@ -1,0 +1,8 @@
+{% import "macro/lang.java.twig" as lang %}
+
+{{ _self.exec(method) }}
+{%- macro exec(method) %}
+{% include "macro/setter.macro.java.twig" with { method: method } %}
+
+{% include "macro/getter.macro.java.twig" with { method: method } %}
+{% endmacro -%}

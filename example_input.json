@@ -1,0 +1,38 @@
+{
+    "class": {
+        "name": "User"
+    },
+    "attributes": [
+        {
+            "visibility": "PRIVATE",
+            "type": "STRING",
+            "name": "username"
+        },
+        {
+            "visibility": "PRIVATE",
+            "type": "STRING",
+            "name": "password"
+        }
+    ],
+    "methods": [
+        {
+            "visibility": "PUBLIC",
+            "name": "serialize",
+            "arguments": [
+                {
+                    "type": "STRING",
+                    "name": "type"
+                },
+                {
+                    "type": "STRING",
+                    "name": "compression"
+                }
+            ],
+            "returnType": "STRING"
+        },
+        {
+            "macro": "GETTER_SETTER",
+            "name": "*ALL_ATTRIBUTES"
+        }
+    ]
+}
